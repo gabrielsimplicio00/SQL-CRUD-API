@@ -6,7 +6,7 @@ class PessoaController {
       const users = await database.Pessoas.findAll()
       res.json(users)
     } catch (error) {
-      console.log(error.message)
+      res.json(error.message)
     }
   }
 
@@ -14,9 +14,12 @@ class PessoaController {
     const { id } = req.params
     try {
       const user = await database.Pessoas.findByPk(id)
+
+      if(!user) return res.status(404).json("Usuário não encontrado")
+
       res.json(user)
     } catch (error) {
-      console.log(error.message)
+      res.json(error.message)
     }
   }
 
@@ -29,9 +32,9 @@ class PessoaController {
         email,
         role
       })
-      res.json(userCreated)
+      res.status(201).json(userCreated)
     } catch (error) {
-      console.log(error.message)
+      res.json(error.message)
     }
   }
 
@@ -48,19 +51,25 @@ class PessoaController {
         where: { id }
       })
       const userUpdated = await database.Pessoas.findByPk(id)
+
+      if(!userUpdated) return res.status(404).json("Usuário não encontrado")
+
       res.json(userUpdated)
     } catch (error) {
-      console.log(error.message)
+      res.json(error.message)
     }
   }
 
   static async deletaPessoa(req, res) {
     const { id } = req.params
+
     try {
+      const user =await database.Pessoas.findByPk(id)
+      if(user === null) return res.status(404).json("Usuário não encontrado")
       await database.Pessoas.destroy({ where: { id } })
       res.json({message: "Usuário deletado com sucesso"})
     } catch (error) {
-      console.log(error.message)
+      res.json(error.message)
     }
   }
 }

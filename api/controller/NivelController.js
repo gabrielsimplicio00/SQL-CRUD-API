@@ -26,7 +26,7 @@ class NivelController {
       const nivelCreated = await database.Niveis.create({
         descr_nivel
       })
-      res.json(nivelCreated)
+      res.status(201).json(nivelCreated)
     } catch (error) {
       console.log(error.message)
     }
@@ -42,6 +42,9 @@ class NivelController {
         where: { id }
       })
       const nivelUpdated = await database.Niveis.findByPk(id)
+
+      if(!nivelUpdated) return res.status(404).send("Nível não encontrado")
+
       res.json(nivelUpdated)
     } catch (error) {
       console.log(error.message)
@@ -50,7 +53,10 @@ class NivelController {
 
   static async deletaNivel(req, res) {
     const { id } = req.params
+
     try {
+      const nivel =await database.Niveis.findByPk(id)
+      if(nivel === null) return res.status(404).json("Nível não encontrado")
       await database.Niveis.destroy({ where: { id } })
       res.json({message: "Nível deletado com sucesso"})
     } catch (error) {

@@ -6,7 +6,7 @@ class TurmaController {
       const turmas = await database.Turmas.findAll()
       res.json(turmas)
     } catch (error) {
-      console.log(error.message)
+      res.json(error.message)
     }
   }
 
@@ -14,9 +14,12 @@ class TurmaController {
     const { id } = req.params
     try {
       const turma = await database.Turmas.findByPk(id)
+
+      if(!turma) return res.status(404).send("Turma não encontrada")
+
       res.json(turma)
     } catch (error) {
-      console.log(error.message)
+      res.json(error.message)
     }
   }
 
@@ -28,9 +31,9 @@ class TurmaController {
         docente_id,
         nivel_id
       })
-      res.json(turmaCreated)
+      res.status(201).json(turmaCreated)
     } catch (error) {
-      console.log(error.message)
+      res.json(error.message)
     }
   }
 
@@ -46,19 +49,25 @@ class TurmaController {
         where: { id }
       })
       const turmaUpdated = await database.Turmas.findByPk(id)
+
+      if(!turmaUpdated) return res.status(404).send("Turma não encontrada")
+
       res.json(turmaUpdated)
     } catch (error) {
-      console.log(error.message)
+      res.json(error.message)
     }
   }
 
   static async deletaTurma(req, res) {
     const { id } = req.params
+
     try {
+      const turma =await database.Turmas.findByPk(id)
+      if(turma === null) return res.status(404).json("Turma não encontrada")
       await database.Turmas.destroy({ where: { id } })
       res.json({message: "Turma deletada com sucesso"})
     } catch (error) {
-      console.log(error.message)
+      res.json(error.message)
     }
   }
 }

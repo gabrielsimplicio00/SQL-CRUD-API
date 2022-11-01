@@ -1,0 +1,590 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "API de escola de inglês",
+    "description": "API de criação e armazenamento de informações de alunos, docentes, níveis e turmas em banco de dados SQL, feita com o propósito de estudo.",
+    "version": "0.0.1"
+  },
+  "externalDocs": {
+    "description": "Meu portfolio",
+    "url": "https://gabrielsimplicio00.github.io/portfolio/"
+  },
+  "servers": [],
+  "tags": [
+    {
+      "name": "pessoas",
+      "description": "Todas as rotas de usuário para efetuar o CRUD"
+    },
+    {
+      "name": "niveis",
+      "description": "Todas as rotas de níveis para efetuar o CRUD"
+    },
+    {
+      "name": "turmas",
+      "description": "Todas as rotas de turmas para efetuar o CRUD"
+    }
+  ],
+  "schemes": ["https", "http"],
+  "paths": {
+    "/pessoas": {
+      "get": {
+        "tags": ["pessoas"],
+        "summary": "Busca todos os usuários no banco de dados",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Pessoa"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["pessoas"],
+        "summary": "Cadastro de pessoas",
+        "description": "Essa rota será responsável por cadastrar usuários",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "$ref": "#/components/schemas/Pessoa"
+              },
+              "examples": {
+                "pessoa": {
+                  "value": {
+                    "nome": "John Doe",
+                    "ativo": true,
+                    "email": "johndoe@example.com",
+                    "role": "estudante"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Criado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Pessoa"
+                  }
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Não aceito"
+          }
+        }
+      }
+    },
+    "/pessoas/{id}": {
+      "get": {
+        "tags": ["pessoas"],
+        "summary": "Busca um usuário no banco de dados pelo ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Busca dados da pessoa pelo ID",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Pessoa"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "put": {
+        "tags": ["pessoas"],
+        "summary": "Altera um usuário no banco de dados pelo ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Altera dados da pessoa pelo ID",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Pessoa"
+              },
+              "examples": {
+                "pessoa": {
+                  "value": {
+                    "nome": "John Smith",
+                    "ativo": true,
+                    "email": "johnsmith@example.com",
+                    "role": "estudante"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Pessoa"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["pessoas"],
+        "summary": "Deleta um usuário no banco de dados pelo ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Deleta o usuário pelo ID",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/niveis": {
+      "get": {
+        "tags": ["niveis"],
+        "summary": "Exibe todos os níveis de dificuldade no banco de dados",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Nivel"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "post": {
+        "tags": ["niveis"],
+        "summary": "Criação de níveis",
+        "description": "Essa rota será responsável por criar níveis de dificuldade",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "$ref": "#/components/schemas/Nivel"
+              },
+              "examples": {
+                "nivel": {
+                  "value": {
+                    "descr_nivel": "fluência"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Criado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Nivel"
+                  }
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Not Accepted"
+          }
+        }
+      }
+    },
+    "/niveis/{id}": {
+      "get": {
+        "tags": ["niveis"],
+        "summary": "Exibe um nível de dificuldade no banco de dados",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Busca dados da pessoa pelo ID",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Nivel"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "put": {
+        "tags": ["niveis"],
+        "summary": "Altera um nível no banco de dados pelo ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Altera o nível pelo ID",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Nivel"
+              },
+              "examples": {
+                "pessoa": {
+                  "value": {
+                    "descr_nivel": "super avançado"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Nivel"
+                  }
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Not Accepted"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["niveis"],
+        "summary": "Deleta um nível no banco de dados pelo ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Deleta o nível pelo ID",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/turmas": {
+      "get": {
+        "tags": ["turmas"],
+        "summary": "Busca todos as turmas no banco de dados",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Turma"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["turmas"],
+        "summary": "Criação de turmas",
+        "description": "Essa rota será responsável por criar turmas",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "$ref": "#/components/schemas/Turma"
+              },
+              "examples": {
+                "pessoa": {
+                  "value": {
+                    "data_inicio": "2022-09-24",
+                    "nivel_id": 2,
+                    "docente_id": 3
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Criado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Turma"
+                  }
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Não aceito"
+          }
+        }
+      }
+    },
+    "/turmas/{id}": {
+      "get": {
+        "tags": ["turmas"],
+        "summary": "Exibe uma turma específica no banco de dados",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Busca dados da turma pelo ID",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Turma"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "put": {
+        "tags": ["turmas"],
+        "summary": "Altera uma turma no banco de dados pelo ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Altera o nível pelo ID",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Turma"
+              },
+              "examples": {
+                "turmas": {
+                  "value": {
+                    "data_inicio": "2019-12-10",
+                    "nivel_id": 2,
+                    "docente_id": 3
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Turma"
+                  }
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Not Accepted"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["turmas"],
+        "summary": "Deleta uma turma no banco de dados pelo ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Deleta uma turma pelo ID",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Pessoa": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "nome": {
+            "type": "string"
+          },
+          "ativo": {
+            "type": "boolean"
+          },
+          "email": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
+        }
+      },
+      "Nivel": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "descr_nivel": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
+        }
+      },
+      "Turma": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "data_inicio": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          },
+          "docente_id": {
+            "type": "number"
+          },
+          "nivel_id": {
+            "type": "number"
+          }
+        }
+      }
+    }
+  }
+}

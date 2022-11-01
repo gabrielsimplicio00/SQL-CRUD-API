@@ -17,7 +17,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Turmas.init({
-    data_inicio: DataTypes.DATEONLY
+    data_inicio: {
+      type: DataTypes.DATEONLY,
+      allowNull: false
+    }
   }, {
     sequelize,
     modelName: 'Turmas',
