@@ -15,8 +15,8 @@
   },
   "production": {
     "username": "root",
-    "password": "simplicio4194",
-    "database": "escola_ingles",
+    "password": null,
+    "database": "database_test",
     "host": "127.0.0.1",
     "dialect": "mysql"
   }
